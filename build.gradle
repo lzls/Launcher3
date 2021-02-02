@@ -145,12 +145,16 @@ allprojects {
 }
 
 dependencies {
+    implementation PROTOBUF_JAVA_DEPENDENCY
+    implementation PROTOBUF_JAVANANO_DEPENDENCY
+
     implementation "androidx.dynamicanimation:dynamicanimation:${ANDROID_X_VERSION}"
     implementation "androidx.recyclerview:recyclerview:${ANDROID_X_VERSION}"
     implementation "androidx.preference:preference:${ANDROID_X_VERSION}"
     implementation project(':IconLoader')
     withQuickstepImplementation project(':SharedLibWrapper')
     implementation fileTree(dir: "${FRAMEWORK_PREBUILTS_DIR}/libs", include: 'launcher_protos.jar')
+    implementation fileTree(dir: "libs", include: 'sysui_shared.jar')
 
     // Recents lib dependency
     withQuickstepImplementation fileTree(dir: "${FRAMEWORK_PREBUILTS_DIR}/quickstep/libs", include: 'sysui_shared.jar')
@@ -176,7 +180,7 @@ protobuf {
         generateProtoTasks {
             all().each { task ->
                 task.builtins {
-                    remove java
+                    java {}
                     javanano {
                         option "java_package=launcher_log_extension.proto|com.android.launcher3.userevent.nano"
                         option "java_package=launcher_log.proto|com.android.launcher3.userevent.nano"
